@@ -8,9 +8,20 @@ function App() {
 
   const moveDisk = (from, to) => {
     const newTowers = [...towers];
-    const disk = newTowers[from].pop();
+    const disk = newTowers[from][newTowers[from].length - 1];
+
+    if (newTowers[to].length > 0 && newTowers[to][newTowers[to].length - 1] < disk) {
+      alert("You can't place a larger disk atop a smaller one.");
+      return;
+    }
+
+    newTowers[from].pop();
     newTowers[to].push(disk);
     setTowers(newTowers);
+
+    if (newTowers[2].length === 6 && newTowers[2].join() === "6,5,4,3,2,1") {
+      alert("Congratulations. You won.");
+    }
   };
 
   const handleDragEnd = (event) => {
